@@ -6,7 +6,7 @@ const app = express();
 
 
  app.use(express.json())
-
+ app.use(express.static('public'));
 
 
 mongoose.connect(process.env.TODO_URI, { useNewUrlParser: true, useUnifiedTopology: true }, () => {

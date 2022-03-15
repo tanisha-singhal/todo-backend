@@ -9,9 +9,12 @@ const app = express();
  app.use(express.static('public'));
 
 
-mongoose.connect(process.env.TODO_URI, { useNewUrlParser: true, useUnifiedTopology: true }, () => {
-  console.log("connected to Mongo successfully");
+mongoose.connect(process.env.TODO_URI) .then(function (db) {
+  console.log("db connected");
 })
+.catch(function (err) {
+  console.log("err", err);
+});
 
 
 

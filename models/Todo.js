@@ -5,7 +5,10 @@ const TodoSchema=new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'user',
     },
-    value:String,
+    value:{
+       type: String,
+       required:true,
+    },
     checked:{
         type:Boolean,
         default:false,

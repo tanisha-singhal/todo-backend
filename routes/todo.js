@@ -42,13 +42,14 @@ router.post(
 );
 //ROUTE 3:UPDATE AN EXISTING TODO USING :PUT "api/todo/updatetodo".login required.
 router.put("/updatetodo/:id", fetchUser, async (req, res) => {
-  const updatedTodo = req.body;
+  const todoToBeUpdated= req.body;
   console.log(req.params);
-  console.log(updatedTodo);
+  console.log(todoToBeUpdated);
   //Create a newTodo object
   try {
     //Find the todo to be updated and update it.
-
+    //const newTodo={...updatedTodo};
+    
     let todo = await Todo.findById(req.params.id);
     if (!todo) {
       return res.status(404).send("Not Found");
@@ -57,12 +58,15 @@ router.put("/updatetodo/:id", fetchUser, async (req, res) => {
     if (todo.user.toString() !== req.user.id) {
       return res.status(401).send("Not Allowed");
     }
-
-    let element = await Todo.findByIdAndUpdate(req.params.id, updatedTodo, {
-      new: true,
+    todo.checked=!todo.checked;
+    await todo.save().then(updatedTodo=>{
+      console.log(updatedTodo);
     });
-    console.log(element);
-    res.json({ element });
+    // let element = await Todo.findByIdAndUpdate(req.params.id, {$set: newTodo}, {
+    //   new: true,
+    // });
+    //console.log(todo);
+    res.json({ todo });
   } catch (error) {
     console.log(error);
     res.status(500).send("Internal Server error");
